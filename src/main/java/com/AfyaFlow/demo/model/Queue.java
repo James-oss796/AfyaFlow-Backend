@@ -1,12 +1,7 @@
 package com.AfyaFlow.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Queue {
@@ -23,6 +18,9 @@ public class Queue {
 
     @ManyToOne
     private Patient patient;
+
+    @ManyToOne
+    private Doctor doctor;
 
     @ManyToOne
     private Department department;

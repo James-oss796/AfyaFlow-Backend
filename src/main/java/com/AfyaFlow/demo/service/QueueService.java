@@ -1,0 +1,29 @@
+package com.AfyaFlow.demo.service;
+
+import com.AfyaFlow.demo.model.Queue;
+import com.AfyaFlow.demo.repository.QueueRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class QueueService {
+
+    private final QueueRepository repository;
+
+    public QueueService(QueueRepository repository) {
+        this.repository = repository;
+    }
+
+    public Queue addToQueue(Queue queue) {
+        return repository.save(queue);
+    }
+
+    public List<Queue> getQueue() {
+        return repository.findAll();
+    }
+
+    public List<Queue> getQueueByDoctor(Long doctorId) {
+        return repository.findByDoctorId(doctorId);
+    }
+}
