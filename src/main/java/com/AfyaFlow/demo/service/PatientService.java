@@ -1,34 +1,19 @@
 package com.AfyaFlow.demo.service;
 
+import com.AfyaFlow.demo.dto.PatientRequest;
+import com.AfyaFlow.demo.dto.PatientResponse;
+
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+public interface PatientService {
 
-import com.AfyaFlow.demo.model.Patient;
-import com.AfyaFlow.demo.repository.PatientRepository;
+    PatientResponse createPatient(PatientRequest request);
 
-@Service
-public class PatientService {
+    PatientResponse getPatientById(Long id);
 
-    private final PatientRepository patientRepository;
+    List<PatientResponse> getAllPatients();
 
-    public PatientService(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
+    void deletePatient(Long id);
 
-    public Patient registerPatient(Patient patient) {
-        return patientRepository.save(patient);
-    }
-
-    public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
-    }
-      public Patient getPatient(Long id){
-        return patientRepository.findById(id).orElse(null);
-    }
-
-    public void deletePatient(Long id){
-        patientRepository.deleteById(id);
-    }
-
+    PatientResponse updatePatient(Long id, PatientRequest request);
 }

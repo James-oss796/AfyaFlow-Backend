@@ -2,56 +2,49 @@ package com.AfyaFlow.demo.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.AfyaFlow.demo.dto.PatientRequest;
+import com.AfyaFlow.demo.dto.PatientResponse;
 
-import com.AfyaFlow.demo.model.Patient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import com.AfyaFlow.demo.service.PatientService;
 
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
+    private final PatientService patientService;
 
-    private final PatientService service;
-
-    public PatientController(PatientService service){
-        this.service = service;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
     }
 
     @PostMapping
-    public ResponseEntity<?> createPatient(@RequestBody Patient patient) {
-        // Basic validation
-        if (patient.getName() == null || patient.getPhone() == null) {
-            return ResponseEntity.badRequest().body("Name and phone are required");
-        }
+    public ResponseEntity<PatientResponse> createPatient(@RequestBody PatientRequest request){
+        return ResponseEntity.ok(patientService.createPatient(request));
+    }
 
-        Patient saved = service.registerPatient(patient);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    @GetMapping("/{id}")
+    public ResponseEntity<PatientResponse> getPatient(@PathVariable Long id){
+        return ResponseEntity.ok(patientService.getPatientById(id));
     }
 
     @GetMapping
-    public List<Patient> getAll(){
-        return service.getAllPatients();
+    public ResponseEntity<List<PatientResponse>> getAllPatients(){
+        return ResponseEntity.ok(patientService.getAllPatients());
     }
 
-    @GetMapping("/patients/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
-        Patient patient = service.getPatient(id);
-        if (patient == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
-        }
-        return ResponseEntity.ok(patient);
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientResponse> updatePatient(@PathVariable Long id, @RequestBody PatientRequest request){
+        return ResponseEntity.ok(patientService.updatePatient(id, request));
     }
 
-    @DeleteMapping("/patients/{id}")
-    public void delete(@PathVariable Long id){
-        service.deletePatient(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePatient(@PathVariable Long id){
+        patientService.deletePatient(id);
+        return ResponseEntity.ok("Patient deleted successfully");
     }
+
+
+
 }

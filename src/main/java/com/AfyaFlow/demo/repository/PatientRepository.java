@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    // Find a patient by phone number
-    Optional<Patient> findByPhone(String phone);
+    Optional<Patient> findByUser_Email(String email);
 
     // Optional: find by patient code
     Optional<Patient> findByPatientCode(String patientCode);

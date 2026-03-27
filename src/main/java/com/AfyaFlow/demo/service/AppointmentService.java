@@ -25,7 +25,7 @@ public class AppointmentService {
     }
 
     public List<Appointment> getAppointmentsByPatient(Long patientId) {
-        return repository.findByPatientId(patientId);
+        return repository.findByPatientPatientId(patientId);
     }
 
     public List<Appointment> getAppointmentsByDoctor(Long doctorId) {
