@@ -2,6 +2,7 @@ package com.AfyaFlow.demo.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,15 @@ public class AppointmentController {
     @GetMapping
     public List<Appointment> getAppointments(){
         return service.getAppointments();
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public List<Appointment> getAppointmentsByPatient(@PathVariable Long patientId) {
+        return service.getAppointmentsByPatient(patientId);
+    }
+
+    @GetMapping("/doctor/{doctorId}")
+    public List<Appointment> getAppointmentsByDoctor(@PathVariable Long doctorId) {
+        return service.getAppointmentsByDoctor(doctorId);
     }
 }
